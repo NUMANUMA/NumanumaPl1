@@ -23,7 +23,7 @@ public class Event implements Listener
 
         Player player = e.getPlayer();
 
-        //ガラスの上に金ブロック置いたらスポーンってスポンジが飛んでいくのとダイヤモンドが16個出てくる
+        //金ブロックの上にガラス置いたらスポーンってスポンジが飛んでいくのとダイヤモンドが16個出てくる
         if(e.getBlockPlaced().getType() == Material.GLASS) {
             Location loc = e.getBlockPlaced().getLocation();
             World w = loc.getWorld();
@@ -43,6 +43,12 @@ public class Event implements Listener
                 Entity ent = player.getWorld().spawnFallingBlock(loc,Material.SPONGE,(byte) 0);
                 ent.setVelocity(new Vector(0,2,0));
             }
+        }
+
+        //伝説のスポンジブロックを置くと爆発四散する
+        if(e.getBlockPlaced().getType() == Material.SPONGE) {
+            Location eloc = e.getBlockPlaced().getLocation();
+            eloc.getWorld().createExplosion(eloc, 100);
         }
     }
 }
